@@ -1,14 +1,13 @@
 #!/bin/sh
 
 FILE_Y="$(find /sys/bus/iio/devices/iio:device*/ -iname in_accel_y_raw)"
-FILE_X="$(find /sys/bus/iio/devices/iio:device*/ -iname in_accel_x_raw)"
 
 while true; do
-        s2 = "-32768"
+
         y_raw="$(cat "$FILE_Y")"
 
-	if [[ "$y_raw" = "$s2" ]]
+        if [[ "${y_raw}" == *"32768"* ]]
         then
-          echo match
+          echo match && sxmo_flashtoggle.sh
         fi
 done
